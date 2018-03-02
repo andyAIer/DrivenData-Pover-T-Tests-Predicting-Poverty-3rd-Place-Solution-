@@ -1,5 +1,5 @@
 
-# DrivenData: Pover-T Tests: Predicting Poverty (3nd Place Solution)
+# DrivenData: Pover-T Tests: Predicting Poverty (3rd Place Solution)
 
  ### For more about this repository, see the competition page:
  ### https://www.drivendata.org/competitions/50/worldbank-poverty-prediction/
