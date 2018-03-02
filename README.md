@@ -6,9 +6,8 @@
 
  ## How to run:
 
- '''
-python individual_fe.py
-python prepare_data.py
-python main.py
-'''
+	python individual_fe.py
+	python prepare_data.py
+	python main.py
+
 
