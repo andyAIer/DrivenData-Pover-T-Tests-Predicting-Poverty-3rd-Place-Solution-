@@ -50,24 +50,17 @@ def nn_model(paras, data):
     layer_2_nodes = paras['nn_l2']
 #     layer_3_nodes = 300
     batch = paras['batch']
-#             print('l1, l2, batchsize: ', layer_1_nodes, layer_2_nodes, batch)
     number_of_epochs = paras['epochs']
     dropout_rate = paras['dp']# + np.random.rand(1)
     nn_model = Sequential()
     # The input layer and the first hidden layer
     nn_model.add(Dense(activation="relu", input_dim=input_nodes, units=layer_1_nodes, kernel_initializer="lecun_normal", 
                          kernel_regularizer=regularizers.l2(0.01)))
-#             nn_model.add(LeakyReLU(alpha=0.3))
-#             nn_model.add(PReLU()) # better
-#             nn_model.add(ELU(alpha=0.3))
 
     # The second hidden layer
     nn_model.add(Dropout(dropout_rate))
     nn_model.add(Dense(activation="relu", input_dim=layer_1_nodes, units=layer_2_nodes, kernel_initializer="lecun_normal", 
                          kernel_regularizer=regularizers.l2(0.01)))
-#             nn_model.add(LeakyReLU(alpha=0.3))
-#             nn_model.add(PReLU())
-#             nn_model.add(ELU(alpha=0.3))
     nn_model.add(Dropout(dropout_rate))
 
     nn_model.add(Dense(activation="sigmoid", units=1, kernel_initializer="lecun_normal"))
@@ -83,7 +76,6 @@ def nn_model(paras, data):
     nn_model.load_weights("poverty_weights.hdf5")
     y_pred_val = nn_model.predict(x_val).ravel()
     y_pred_test = nn_model.predict(data['x_test'].values).ravel()
-#     y_pred_tests.append(pred_nn)
     
     return y_pred_val, y_pred_test
 
@@ -101,6 +93,7 @@ def lgb_model(paras, data):
         'feature_fraction' : paras['feature_fraction'],
 #         'min_data_in_leaf': 5,
         'min_sum_hessian_in_leaf': paras['hess'],
+        'verbose': -1,
     }
     lgb_train = lgb.Dataset(x_tr, y_tr, feature_name=paras['col_names'])
     lgb_val = lgb.Dataset(x_val, y_val, feature_name=paras['col_names'], reference=lgb_train)
@@ -123,7 +116,8 @@ def xgb_model(paras, data):
         'objective': 'binary:logistic',                           
         'eval_metric': 'logloss',
         #'base_socre': 0.2,
-        'seed': 123
+        'seed': 123,
+        'silent': 1,
     }
     dtrain = xgb.DMatrix(x_tr, label=y_tr, feature_names=paras['col_names'])
     dval= xgb.DMatrix(x_val, label=y_val, feature_names=paras['col_names'])

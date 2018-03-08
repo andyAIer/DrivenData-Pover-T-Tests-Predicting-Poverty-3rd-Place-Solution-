@@ -66,7 +66,7 @@ print(a_test.shape, b_test.shape, c_test.shape)
 # # Start training
 
 paras_a = {
-    'splits': 10,
+    'splits': 20,
     'lgb': {
         'max_depth': 4,
         'lr': 0.01,
@@ -99,7 +99,7 @@ paras_a = {
 a_preds, a_loss = train_model(aX_train, ay_train, paras_a, test_ = a_test)
 
 paras_b = {
-    'splits': 10,
+    'splits': 20,
     'lgb': {
         'max_depth': 3,
         'lr': 0.01,

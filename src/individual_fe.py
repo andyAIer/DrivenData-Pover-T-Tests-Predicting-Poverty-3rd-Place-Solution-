@@ -22,7 +22,6 @@ def merge_add_features(train, test):
     for col in train.columns:
         if train[col].dtype in ['int64', 'float64'] and col not in ['id', 'iid']:
             num_.append(col)
-#             continue
         elif train[col].dtype=='O' and col not in ['poor', 'country']:
             cat_.append(col)
     print("Merged table shape: ", merge.shape, 'Categorical features\', number: ', len(cat_), "Numerical features' number: ", len(num_))
@@ -30,26 +29,8 @@ def merge_add_features(train, test):
     ids = df_new.id.tolist()
     len_ = len(ids)
     print('number of id: ', len_)
-    
-    for col in cat_:
-        unique_ = merge[col][merge[col].notnull()].unique()
-        for v in unique_:
-            df_new[col+'_'+v] = 0
-        
-    for idx in range(len_):
-        if idx % 1000 == 0:
-            print(idx, ids[idx], str(datetime.now()))
-        for col in cat_:
-            ct = Counter(merge[merge.id==ids[idx]][col].tolist())
-            for k in ct:
-                df_new.at[idx, col+'_'+k] += ct[k]
-
     for col in num_:
         df_new[col+'_mean'] = np.NaN
-        df_new[col+'_max'] = np.NaN
-        df_new[col+'_min'] = np.NaN
-        df_new[col+'_pos'] = 0.
-        df_new[col+'_neg'] = 0.
     for idx, id_ in enumerate(merge.id.unique()):
         if idx % 500 == 0:
             print(idx, id_, str(datetime.now()))
@@ -57,10 +38,6 @@ def merge_add_features(train, test):
         for col in num_:
             li = merge[merge.id==id_][col]
             df_new.at[df_new.id==id_, col+'_mean'] = li.mean()
-            df_new.at[df_new.id==id_, col+'_max'] = li.max()
-            df_new.at[df_new.id==id_, col+'_min'] = li.min()
-            df_new.at[df_new.id==id_, col+'_pos'] = len([x for x in li.tolist() if x > 0]) 
-            df_new.at[df_new.id==id_, col+'_neg'] = len([x for x in li.tolist() if x < 0]) 
     print("Finish, shape of joined table: ", df_new.shape)
     return df_new
 
