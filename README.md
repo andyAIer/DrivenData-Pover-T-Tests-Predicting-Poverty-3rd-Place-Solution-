@@ -5,9 +5,9 @@
  ### https://www.drivendata.org/competitions/50/worldbank-poverty-prediction/
 
  ## Requirements
-    See requirements.txt
+ See requirements.txt
  ## How to run:
- 	Under src path, run: 
+ Under src path, run: 
 
 	python individual_fe.py
 	python prepare_data.py
