@@ -4,11 +4,11 @@
  ### For more about this repository, see the competition page:
  ### https://www.drivendata.org/competitions/50/worldbank-poverty-prediction/
 
-## requirements
-see requirements.txt
+ ## Requirements
+    See requirements.txt
+ ## How to run:
+ 	Under src path, run: 
 
-## How to run:
-under src/ folder run: 
 	python individual_fe.py
 	python prepare_data.py
 	python main.py
